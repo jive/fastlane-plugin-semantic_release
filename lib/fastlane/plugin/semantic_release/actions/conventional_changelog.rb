@@ -11,6 +11,7 @@ module Fastlane
         commits = Helper::SemanticReleaseHelper.git_log(
           pretty: '%s|%b|%H|%h|%an|%at|>',
           start: params[:hash],
+          end: params[:end],
           debug: params[:debug]
         )
         commits.split("|>")
@@ -33,6 +34,7 @@ module Fastlane
         # Get commits log between last version and head
         commits = get_commits_from_hash(
           hash: last_tag_hash,
+          end: params[:end],
           debug: params[:debug]
         )
         parsed = parse_commits(commits)
