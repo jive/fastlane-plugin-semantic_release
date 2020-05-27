@@ -237,6 +237,12 @@ module Fastlane
             optional: true
           ),
           FastlaneCore::ConfigItem.new(
+            key: :end,
+            description: "Use a commit hash instead of HEAD",
+            type: String,
+            optional: true
+          ),
+          FastlaneCore::ConfigItem.new(
             key: :sections,
             description: "Map type to section title",
             default_value: {

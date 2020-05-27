@@ -1,6 +1,6 @@
 # semantic_release plugin for `fastlane`
 
-[![CircleCI](https://circleci.com/gh/xotahal/fastlane-plugin-semantic_release.svg?style=svg)](https://circleci.com/gh/xotahal/fastlane-plugin-semantic_release) [![License](https://img.shields.io/github/license/SiarheiFedartsou/fastlane-plugin-versioning.svg)](https://github.com/SiarheiFedartsou/fastlane-plugin-versioning/blob/master/LICENSE) [![Gem Version](https://badge.fury.io/rb/fastlane-plugin-semantic_release.svg)](https://badge.fury.io/rb/fastlane-plugin-semantic_release) [![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-versioning)
+[![CircleCI](https://circleci.com/gh/xotahal/fastlane-plugin-semantic-fork_release.svg?style=svg)](https://circleci.com/gh/xotahal/fastlane-plugin-semantic-fork_release) [![License](https://img.shields.io/github/license/SiarheiFedartsou/fastlane-plugin-versioning.svg)](https://github.com/SiarheiFedartsou/fastlane-plugin-versioning/blob/master/LICENSE) [![Gem Version](https://badge.fury.io/rb/fastlane-plugin-semantic-fork_release.svg)](https://badge.fury.io/rb/fastlane-plugin-semantic-fork_release) [![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-versioning)
 
 ## Getting Started
 
@@ -39,7 +39,7 @@ Example:
 notes = conventional_changelog(format: 'slack', title: 'Android Alpha')
 ```
 
-<img src="https://raw.githubusercontent.com/xotahal/fastlane-plugin-semantic_release/master/docs/Changelog.png" />
+<img src="https://raw.githubusercontent.com/xotahal/fastlane-plugin-semantic-fork_release/master/docs/Changelog.png" />
 
 ### `analyze_commits`
 
@@ -77,7 +77,7 @@ And you can access these like this:
 
 `next_version = lane_context[SharedValues::RELEASE_NEXT_VERSION]`
 
-<img src="https://raw.githubusercontent.com/xotahal/fastlane-plugin-semantic_release/master/docs/Analyze.png" />
+<img src="https://raw.githubusercontent.com/xotahal/fastlane-plugin-semantic-fork_release/master/docs/Analyze.png" />
 
 ## Tests
 

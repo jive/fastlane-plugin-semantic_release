@@ -34,7 +34,7 @@ module Fastlane
         commits = Helper::SemanticReleaseHelper.git_log(
           pretty: '%s|%b|>',
           start: params[:hash],
-          end: parmas[:end],
+          end: params[:end],
           debug: params[:debug]
         )
         commits.split("|>")
@@ -229,6 +229,12 @@ module Fastlane
             verify_block: proc do |value|
               UI.user_error!("No match for analyze_commits action given, pass using `match: 'expr'`") unless value && !value.empty?
             end
+          ),
+          FastlaneCore::ConfigItem.new(
+            key: :end,
+            description: "Use a commit hash instead of HEAD",
+            type: String,
+            optional: true
           ),
           FastlaneCore::ConfigItem.new(
             key: :releases,
