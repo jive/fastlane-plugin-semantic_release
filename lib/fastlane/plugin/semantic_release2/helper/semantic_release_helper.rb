@@ -9,13 +9,12 @@ module Fastlane
       # as `Helper::SemanticReleaseHelper.your_method`
       #
       def self.git_log(params)
-        if params[:end]
-          command = "git log --pretty='#{params[:pretty]}' --reverse #{params[:start]}..#{params[:end]}" 
-          Actions.sh(command, log: params[:debug]).chomp
-        else
-          command = "git log --pretty='#{params[:pretty]}' --reverse #{params[:start]}..HEAD"
-          Actions.sh(command, log: params[:debug]).chomp
+        end_hash = 'HEAD'
+        if params[:end] and !params[:end].empty?
+          end_hash = params[:end]
         end
+        command = "git log --pretty='#{params[:pretty]}' --reverse #{params[:start]}.."
+        Actions.sh(command, log: params[:debug]).chomp
       end
 
       def self.parse_commit(params)
