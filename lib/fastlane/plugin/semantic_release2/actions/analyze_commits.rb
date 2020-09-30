@@ -47,33 +47,37 @@ module Fastlane
         # Default last version
         version = '0.0.0'
 
-        tag = get_last_tag(
-          match: params[:match],
-          debug: params[:debug]
-        )
-
-        if tag.empty?
-          UI.message("First commit of the branch is taken as a begining of next release")
-          # If there is no tag found we taking the first commit of current branch
-          hash = Actions.sh('git rev-list --max-parents=0 HEAD', log: params[:debug]).chomp
+        if params[:start]
+          hash = params[:start]
         else
-          # Tag's format is v2.3.4-5-g7685948
-          # See git describe man page for more info
-          tag_name = tag.split('-')[0].strip
-          parsed_version = tag_name.match(params[:tag_version_match])
-
-          if parsed_version.nil?
-            UI.user_error!("Error while parsing version from tag #{tag_name} by using tag_version_match - #{params[:tag_version_match]}. Please check if the tag contains version as you expect and if you are using single brackets for tag_version_match parameter.")
-          end
-
-          version = parsed_version[0]
-          # Get a hash of last version tag
-          hash = get_last_tag_hash(
-            tag_name: tag_name,
+          tag = get_last_tag(
+            match: params[:match],
             debug: params[:debug]
           )
 
-          UI.message("Found a tag #{tag_name} associated with version #{version}")
+          if tag.empty?
+            UI.message("First commit of the branch is taken as a begining of next release")
+            # If there is no tag found we taking the first commit of current branch
+            hash = Actions.sh('git rev-list --max-parents=0 HEAD', log: params[:debug]).chomp
+          else
+            # Tag's format is v2.3.4-5-g7685948
+            # See git describe man page for more info
+            tag_name = tag.split('-')[0].strip
+            parsed_version = tag_name.match(params[:tag_version_match])
+
+            if parsed_version.nil?
+              UI.user_error!("Error while parsing version from tag #{tag_name} by using tag_version_match - #{params[:tag_version_match]}. Please check if the tag contains version as you expect and if you are using single brackets for tag_version_match parameter.")
+            end
+
+            version = parsed_version[0]
+            # Get a hash of last version tag
+            hash = get_last_tag_hash(
+              tag_name: tag_name,
+              debug: params[:debug]
+            )
+
+            UI.message("Found a tag #{tag_name} associated with version #{version}")
+          end
         end
 
         # converts last version string to the int numbers
@@ -148,7 +152,7 @@ module Fastlane
         git_command = 'git rev-list --max-parents=0 HEAD'
         # Begining of the branch is taken for codepush analysis
         hash_lines = Actions.sh("#{git_command} | wc -l", log: params[:debug]).chomp
-        hash = Actions.sh(git_command, log: params[:debug]).chomp
+        hash = params[:start] || Actions.sh(git_command, log: params[:debug]).chomp
         next_major = 0
         next_minor = 0
         next_patch = 0
@@ -229,6 +233,12 @@ module Fastlane
             verify_block: proc do |value|
               UI.user_error!("No match for analyze_commits action given, pass using `match: 'expr'`") unless value && !value.empty?
             end
+          ),
+          FastlaneCore::ConfigItem.new(
+            key: :start,
+            description: "Use a commit hash instead of HEAD",
+            type: String,
+            optional: true
           ),
           FastlaneCore::ConfigItem.new(
             key: :end,

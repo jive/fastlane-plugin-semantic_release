@@ -33,7 +33,7 @@ module Fastlane
 
         # Get commits log between last version and head
         commits = get_commits_from_hash(
-          hash: last_tag_hash,
+          hash: params[:start] || last_tag_hash,
           end: params[:end],
           debug: params[:debug]
         )
@@ -234,6 +234,12 @@ module Fastlane
             description: "You can change the order of groups in release notes",
             default_value: ["feat", "fix", "refactor", "perf", "chore", "test", "docs", "no_type"],
             type: Array,
+            optional: true
+          ),
+          FastlaneCore::ConfigItem.new(
+            key: :start,
+            description: "Use a commit hash instead of HEAD",
+            type: String,
             optional: true
           ),
           FastlaneCore::ConfigItem.new(
