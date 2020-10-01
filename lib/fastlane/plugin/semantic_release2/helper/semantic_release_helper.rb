@@ -13,7 +13,7 @@ module Fastlane
         if params[:end] and !params[:end].empty?
           end_hash = params[:end]
         end
-        command = "git log --pretty='#{params[:pretty]}' --reverse #{params[:start]}.."
+        command = "git log --pretty='#{params[:pretty]}' --reverse #{params[:start]}..#{end_hash}"
         Actions.sh(command, log: params[:debug]).chomp
       end
 
